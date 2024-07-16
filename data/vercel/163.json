@@ -1,0 +1,20 @@
+{
+  "time_namelookup": 29,
+  "time_connect": 47,
+  "time_appconnect": 130,
+  "time_pretransfer": 130,
+  "time_redirect": 0,
+  "time_starttransfer": 168,
+  "time_total": 235,
+  "speed_download": 1778370,
+  "speed_upload": 0,
+  "remote_ip": "76.76.21.164",
+  "remote_port": "443",
+  "local_ip": "172.31.75.40",
+  "local_port": "41184",
+  "range_dns": 29,
+  "range_connection": 18,
+  "range_ssl": 83,
+  "range_server": 38,
+  "range_transfer": 67
+}
