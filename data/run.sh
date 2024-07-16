@@ -10,20 +10,20 @@ export HTTPSTAT_METRICS_ONLY=true
 #  cd ../netlify
 #  for i in {001..200}
 #  do
-#     httpstat https://pixtest.netlify.app/lorem/ > "$i".json
+#     httpstat  > "$i".json
 #       echo "netlify $i"
 #  done
 # cd ../cloudflare
 # for i in {001..200}
 # do
-#    httpstat https://icpmoles.pages.dev/lorem/ > "$i".json
+#    httpstat  > "$i".json
 #        echo "cloudflare $i"
 # done
 # cd ../vercel
 # for i in {001..200}
 # do
 #    echo "vercel $i"
-#    httpstat https://icpmoles.vercel.app/lorem > "$i".json
+#    httpstat  > "$i".json
 # done
 
 cd render
