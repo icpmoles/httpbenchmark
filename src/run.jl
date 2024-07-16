@@ -1,6 +1,6 @@
 using CairoMakie
 using JSON, CSV
-using DataFrames
+using DataFrames, Statistics
 
 fullhl = ["cloudflare" ,"vercel" ,"github" , "netlify","render"];
 hostinglist = [ "cloudflare" ];
@@ -9,7 +9,7 @@ hostinglist = [ "cloudflare" ];
 CairoMakie.activate!(type = "svg")
 list = [];
 i= 1
-for folder = fullhl
+for folder in fullhl
     # readdir("data/$folder")
     b = Dict("target" => folder, "index" => i) 
     global i= i+1
@@ -42,3 +42,11 @@ rainclouds(df.index, df.time_total;
     plot_boxplots = true, cloud_width=0.5, clouds=hist, hist_bins=100 
   #  ,color = palette
     )
+
+## Mean stats
+
+
+for provider in fullhl
+    time = mean(filter(row -> row.target == provider, df).time_total)
+    print("$provider time: $time\n")
+end
