@@ -1,6 +1,11 @@
 using CairoMakie
 using JSON, CSV
 using DataFrames, Statistics
+using Colors
+
+
+# folders = readdir("data")
+Folders = []
 
 fullhl = ["cloudflare" ,"vercel" ,"github" , "netlify","render"];
 hostinglist = [ "cloudflare" ];
@@ -11,7 +16,8 @@ list = [];
 i= 1
 for folder in fullhl
     # readdir("data/$folder")
-    b = Dict("target" => folder, "index" => i) 
+    push!(Folders,titlecase(folder))
+    b = Dict("target" => titlecase(folder), "index" => i) 
     global i= i+1
     for file in readdir("data/$folder")
         print("data/$folder/$file \n")  
@@ -30,23 +36,30 @@ origdf = DataFrame(list)
 
 df = filter(row -> row.time_total < maxtime, origdf)
 
+for provider in Folders
+    time = mean(filter(row -> row.target == provider, df).time_total)
+    print("$provider time: $time\n")
+end
+
+
+set_theme!(theme_minimal())
+
 # CSV.write("data.csv", df)
 category_labels =  fullhl #readdir("data")
 colors = Makie.wong_colors()
 palette= colors[indexin(category_labels, unique(category_labels))]
 
+palette = distinguishable_colors(5)
 
-rainclouds(df.index, df.time_total;
-    axis = (; ylabel = "Providers", xlabel = "Total Time (ms)", title = "", yticks = (1:5, fullhl), limits = (0,maxtime,nothing, nothing)),
+rainclouds(df.target, df.time_total;
+    axis = (; ylabel = "", xlabel = "Total Time (ms)", title = "", yticks = (1:5, Folders), limits = (0,maxtime,nothing, nothing)),
     orientation = :horizontal,
+    gap=0.05,
     plot_boxplots = true, cloud_width=0.5, clouds=hist, hist_bins=100 
-  #  ,color = palette
-    )
+    
+    # , color = palette
+   )
 
 ## Mean stats
 
 
-for provider in fullhl
-    time = mean(filter(row -> row.target == provider, df).time_total)
-    print("$provider time: $time\n")
-end
